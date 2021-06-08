@@ -6,9 +6,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import os
-
 from colorama import Fore, Style
-
 
 __all__ = ['commit', 'describe']
 
@@ -40,10 +38,7 @@ def _describe(model, lines=None, spaces=0):
         space_num = len(name) + spaces + 1
         if m.training:
             name = _color(name)
-        line = "{head}.{name} ({type})".format(
-                head=head,
-                name=name,
-                type=m.__class__.__name__)
+        line = "{head}.{name} ({type})".format(head=head, name=name, type=m.__class__.__name__)
         lines.append(line)
         _describe(m, lines, space_num)
 

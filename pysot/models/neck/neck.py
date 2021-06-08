@@ -14,7 +14,7 @@ class AdjustLayer(nn.Module):
         self.downsample = nn.Sequential(
             nn.Conv2d(in_channels, out_channels, kernel_size=1, bias=False),
             nn.BatchNorm2d(out_channels),
-            )
+        )
         self.center_size = center_size
 
     def forward(self, x):
@@ -36,7 +36,7 @@ class AdjustAllLayer(nn.Module):
                                           center_size)
         else:
             for i in range(self.num):
-                self.add_module('downsample'+str(i+2),
+                self.add_module('downsample' + str(i + 2),
                                 AdjustLayer(in_channels[i],
                                             out_channels[i],
                                             center_size))
@@ -47,6 +47,6 @@ class AdjustAllLayer(nn.Module):
         else:
             out = []
             for i in range(self.num):
-                adj_layer = getattr(self, 'downsample'+str(i+2))
+                adj_layer = getattr(self, 'downsample' + str(i + 2))
                 out.append(adj_layer(features[i]))
             return out

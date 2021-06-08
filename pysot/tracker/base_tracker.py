@@ -13,7 +13,7 @@ from pysot.core.config import cfg
 
 
 class BaseTracker(object):
-    """ Base tracker of single objec tracking
+    """ Base tracker of single object tracking
     """
     def init(self, img, bbox):
         """

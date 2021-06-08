@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 import os
 import socket
 import logging
-
 import torch
 import torch.nn as nn
 import torch.distributed as dist
@@ -36,7 +35,7 @@ class DistModule(nn.Module):
         if get_world_size() > 1:
             broadcast_params(self.module)
         else:
-            self.bn_method = 0  # single proccess
+            self.bn_method = 0  # single process
 
     def forward(self, *args, **kwargs):
         broadcast_buffers(self.module, self.bn_method)
@@ -62,7 +61,7 @@ def broadcast_buffers(model, method=0):
     world_size = get_world_size()
 
     for b in model._all_buffers():
-        if method == 1:  # broadcast from main proccess
+        if method == 1:  # broadcast from main process
             dist.broadcast(b, 0)
         elif method == 2:  # average
             dist.all_reduce(b)
@@ -75,11 +74,11 @@ inited = False
 
 
 def _dist_init():
-    '''
+    """
     if guess right:
         ntasks: world_size (process num)
         proc_id: rank
-    '''
+    """
     rank = int(os.environ['RANK'])
     num_gpus = torch.cuda.device_count()
     torch.cuda.set_device(rank % num_gpus)
@@ -115,13 +114,13 @@ def dist_init():
 
 def get_rank():
     if not inited:
-        raise(Exception('dist not inited'))
+        raise (Exception('dist not inited'))
     return rank
 
 
 def get_world_size():
     if not inited:
-        raise(Exception('dist not inited'))
+        raise (Exception('dist not inited'))
     return world_size
 
 

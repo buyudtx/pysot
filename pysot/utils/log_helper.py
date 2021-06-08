@@ -10,7 +10,6 @@ import logging
 import math
 import sys
 
-
 if hasattr(sys, 'frozen'):  # support for py2exe
     _srcfile = "logging%s__init__%s" % (os.sep, __file__[-4:])
 elif __file__[-4:].lower() in ['.pyc', '.pyo']:
@@ -36,6 +35,7 @@ class Dummy:
 
     def __getattr__(self, arg):
         def dummy(*args, **kwargs): pass
+
         return dummy
 
 
@@ -88,20 +88,21 @@ def add_file_handler(name, log_file, level=logging.INFO):
 init_log('global')
 
 
-def print_speed(i, i_time, n):
-    """print_speed(index, index_time, total_iteration)"""
+def print_speed(i, i_time, n, num_per_epoch):
+    """print_speed(index, index_time, total_iteration, num_per_epoch)"""
     logger = logging.getLogger('global')
     average_time = i_time
     remaining_time = (n - i) * average_time
     remaining_day = math.floor(remaining_time / 86400)
-    remaining_hour = math.floor(remaining_time / 3600 -
-                                remaining_day * 24)
-    remaining_min = math.floor(remaining_time / 60 -
-                               remaining_day * 1440 -
-                               remaining_hour * 60)
-    logger.info('Progress: %d / %d [%d%%], Speed: %.3f s/iter, ETA %d:%02d:%02d (D:H:M)\n' %
-                (i, n, i / n * 100,
-                 average_time,
+    remaining_hour = math.floor(remaining_time / 3600 - remaining_day * 24)
+    remaining_min = math.floor(remaining_time / 60 - remaining_day * 1440 - remaining_hour * 60)
+
+    epoch_period_time = num_per_epoch * average_time
+    epoch_period_min = math.floor(epoch_period_time / 60)
+    epoch_period_sec = math.floor(epoch_period_time % 60)
+
+    logger.info('Progress:%d/%d,[%d%%], Speed:%.3f s/iter, Epoch-period %d:%d(M:S), ETA %d:%02d:%02d(D:H:M)\n' %
+                (i, n, i / n * 100, average_time, epoch_period_min, epoch_period_sec,
                  remaining_day, remaining_hour, remaining_min))
 
 
@@ -141,7 +142,7 @@ class LogOnce:
             return
         self.logged.add(key)
         message = "{filename:s}<{caller}>#{lineno:3d}] {strings}".format(
-                filename=fn, lineno=lineno, strings=strings, caller=caller)
+            filename=fn, lineno=lineno, strings=strings, caller=caller)
         self.logger.info(message)
 
 
@@ -164,7 +165,7 @@ def main():
         logger.info('info')
         logger.warning('warning')
         logger.error('error')
-        logger.critical('critiacal')
+        logger.critical('critical')
 
 
 if __name__ == '__main__':

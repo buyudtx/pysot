@@ -23,6 +23,7 @@ class Meter(object):
 
 class AverageMeter:
     """Computes and stores the average and current value"""
+
     def __init__(self, num=100):
         self.num = num
         self.reset()
@@ -72,9 +73,9 @@ class AverageMeter:
 
     def format_str(self, attr):
         return "{name}: {val:.6f} ({avg:.6f}) ".format(
-                    name=attr,
-                    val=float(self.val[attr]),
-                    avg=float(self.sum[attr]) / self.count[attr])
+            name=attr,
+            val=float(self.val[attr]),
+            avg=float(self.sum[attr]) / self.count[attr])
 
     def __getattr__(self, attr):
         if attr in self.__dict__:

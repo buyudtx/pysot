@@ -6,7 +6,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import math
-
 import numpy as np
 
 from pysot.utils.bbox import corner2center, center2corner
@@ -16,6 +15,7 @@ class Anchors:
     """
     This class generate anchors.
     """
+
     def __init__(self, stride, ratios, scales, image_center=0, size=0):
         self.stride = stride
         self.ratios = ratios
@@ -24,9 +24,7 @@ class Anchors:
         self.size = size
 
         self.anchor_num = len(self.scales) * len(self.ratios)
-
         self.anchors = None
-
         self.generate_anchors()
 
     def generate_anchors(self):
@@ -37,13 +35,13 @@ class Anchors:
         size = self.stride * self.stride
         count = 0
         for r in self.ratios:
-            ws = int(math.sqrt(size*1. / r))
+            ws = int(math.sqrt(size * 1. / r))
             hs = int(ws * r)
 
             for s in self.scales:
                 w = ws * s
                 h = hs * s
-                self.anchors[count][:] = [-w*0.5, -h*0.5, w*0.5, h*0.5][:]
+                self.anchors[count][:] = [-w * 0.5, -h * 0.5, w * 0.5, h * 0.5][:]
                 count += 1
 
     def generate_all_anchors(self, im_c, size):
@@ -65,8 +63,7 @@ class Anchors:
         x2 = zero_anchors[:, 2]
         y2 = zero_anchors[:, 3]
 
-        x1, y1, x2, y2 = map(lambda x: x.reshape(self.anchor_num, 1, 1),
-                             [x1, y1, x2, y2])
+        x1, y1, x2, y2 = map(lambda x: x.reshape(self.anchor_num, 1, 1), [x1, y1, x2, y2])
         cx, cy, w, h = corner2center([x1, y1, x2, y2])
 
         disp_x = np.arange(0, size).reshape(1, 1, -1) * self.stride
@@ -81,5 +78,5 @@ class Anchors:
         x1, y1, x2, y2 = center2corner([cx, cy, w, h])
 
         self.all_anchors = (np.stack([x1, y1, x2, y2]).astype(np.float32),
-                            np.stack([cx, cy, w,  h]).astype(np.float32))
+                            np.stack([cx, cy, w, h]).astype(np.float32))
         return True

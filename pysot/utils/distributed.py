@@ -79,12 +79,12 @@ def _dist_init():
         ntasks: world_size (process num)
         proc_id: rank
     """
-    rank = int(os.environ['RANK'])
+    rank_ = int(os.environ['RANK'])
     num_gpus = torch.cuda.device_count()
-    torch.cuda.set_device(rank % num_gpus)
+    torch.cuda.set_device(rank_ % num_gpus)
     dist.init_process_group(backend='nccl')
-    world_size = dist.get_world_size()
-    return rank, world_size
+    world_size_ = dist.get_world_size()
+    return rank_, world_size_
 
 
 def _get_local_ip():
@@ -99,15 +99,16 @@ def _get_local_ip():
 
 def dist_init():
     global rank, world_size, inited
-    try:
-        rank, world_size = _dist_init()
-    except RuntimeError as e:
-        if 'public' in e.args[0]:
-            logger.info(e)
-            logger.info('Warning: use single process')
-            rank, world_size = 0, 1
-        else:
-            raise RuntimeError(*e.args)
+    # try:
+    #     rank, world_size = _dist_init()
+    # except RuntimeError as e:
+    #     if 'public' in e.args[0]:
+    #         logger.info(e)
+    #         logger.info('Warning: use single process')
+    #         rank, world_size = 0, 1
+    #     else:
+    #         raise RuntimeError(*e.args)
+    rank, world_size = 0, 1
     inited = True
     return rank, world_size
 

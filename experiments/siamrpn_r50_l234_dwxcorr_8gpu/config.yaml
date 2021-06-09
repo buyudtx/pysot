@@ -70,15 +70,9 @@ DATASET:
     - 'YOUTUBEBB'
     - 'COCO'
     - 'DET'
-<<<<<<< HEAD
 
     VIDEOS_PER_EPOCH: -1
-
-=======
     
-    VIDEOS_PER_EPOCH: -1
-    
->>>>>>> 655a73ba9eb6437a72cbe6ec06258c29935b1dff
     TEMPLATE:
         SHIFT: 4
         SCALE: 0.05

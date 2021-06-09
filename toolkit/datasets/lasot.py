@@ -54,7 +54,7 @@ class LaSOTDataset(Dataset):
     Args:
         name: dataset name, should be 'OTB100', 'CVPR13', 'OTB50'
         dataset_root: dataset root
-        load_img: weather to load all imgs
+        load_img: whether to load all imgs
     """
 
     def __init__(self, name, dataset_root, load_img=False):

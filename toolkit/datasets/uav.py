@@ -27,7 +27,7 @@ class UAVDataset(Dataset):
     Args:
         name: dataset name, should be 'UAV123', 'UAV20L'
         dataset_root: dataset root
-        load_img: weather to load all imgs
+        load_img: whether to load all imgs
     """
 
     def __init__(self, name, dataset_root, load_img=False):

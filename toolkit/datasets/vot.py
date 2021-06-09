@@ -91,7 +91,7 @@ class VOTDataset(Dataset):
     Args:
         name: dataset name, should be 'VOT2018', 'VOT2016', 'VOT2019'
         dataset_root: dataset root
-        load_img: weather to load all imgs
+        load_img: whether to load all imgs
     """
 
     def __init__(self, name, dataset_root, load_img=False):
@@ -128,7 +128,7 @@ class VOTLTVideo(Video):
         video_dir: video directory
         init_rect: init rectangle
         img_names: image names
-        gt_rect: groundtruth rectangle
+        gt_rect: ground truth rectangle
     """
 
     def __init__(self, name, root, video_dir, init_rect, img_names, gt_rect, load_img=False):
@@ -171,7 +171,7 @@ class VOTLTDataset(Dataset):
     Args:
         name: dataset name, 'VOT2018-LT'
         dataset_root: dataset root
-        load_img: weather to load all imgs
+        load_img: whether to load all imgs
     """
 
     def __init__(self, name, dataset_root, load_img=False):

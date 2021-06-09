@@ -226,8 +226,7 @@ def train(train_loader, model, optimizer, lr_scheduler, tb_writer):
                     else:
                         info += "\n\t{:s}\t".format(getattr(average_meter, k))
                 logger.info(info)
-                print_speed(idx + 1 + (epoch - 1) * num_per_epoch, average_meter.batch_time.avg,
-                            cfg.TRAIN.EPOCH * num_per_epoch, num_per_epoch)
+                print_speed(idx + 1, average_meter.batch_time.avg, cfg.TRAIN.EPOCH * num_per_epoch, num_per_epoch)
         end = time.time()
 
 

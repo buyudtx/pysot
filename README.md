@@ -6,7 +6,7 @@
 
 ```bash
 cd tools
-python train.py --cfg ../experiments/siamrpn_r50_l234_dwxcorr/config.yaml
+python train.py --cfg ../experiments/siamrpn_r50_l234_dwxcorr_8gpu/config.yaml
 ```
 
 ## Test tracker
